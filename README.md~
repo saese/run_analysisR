@@ -19,6 +19,19 @@ CodeBook.md contains the code with appropriate comments.
 
 
 
+# Finding headers with -mean() or -std() and selecting dataframe with only those headers. Also includes headers such as xxx-meanFreqxxx
+headernames<-names(merged_data)
+selected<-union(grep("-mean()", c(headernames)), grep("-std()", c(headernames)))
+selectedData<-merged_data[,selected]
+
+# Independent tidy data set with the average of each variable for each activity and each subject
+library(data.table)
+merged_data<-data.table(merged_data)
+variables <- tail( names(merged_data), -2)
+dataset_with_average<-merged_data[, lapply(.SD, mean), .SDcols=variables, by=list(subject_name, activity)]
+
+
+
 
 
 
